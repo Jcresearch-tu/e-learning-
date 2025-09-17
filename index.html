@@ -53,28 +53,16 @@
     <script>
 
       // ✅ (เพิ่มฟังก์ชันนี้) Function to detect if the user is on a mobile device
-    function isMobile() {
-      // ตรวจสอบจาก User Agent String ว่ามีคำว่า "Mobi" อยู่หรือไม่
-      return /Mobi/i.test(navigator.userAgent);
-    }
-      
-    // Function to detect if the user is on an iOS device
+   // Function to detect if the user is on an iOS device
     function isIOS() {
       return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
     // Function to detect if the user is using Facebook's in-app browser
-    // function isFacebookApp() {
-    //   return /FBAN|FBAV/i.test(navigator.userAgent);
-    // }
     function isFacebookApp() {
-      // ตรวจสอบ Facebook และ Messenger
-      return /FBAN|FBAV|FBMD|FBSN|FBSV|FBSS/i.test(userAgent);
+      return /FBAN|FBAV/i.test(navigator.userAgent);
     }
 
-    function isLineApp() {
-      return /Line/i.test(userAgent);
-    }
 
     // Function to generate the appropriate link
     function generateLink() {
