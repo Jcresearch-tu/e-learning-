@@ -82,13 +82,11 @@
       var link = document.createElement('a');
       var video = document.createElement('video'); // เปลี่ยนจาก img เป็น video
     
-      // if (isFacebookApp() && isIOS()) {
-      //   link.href = 'x-safari-https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
-      // } else {
-      //   link.href = 'https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
-      // }
-      const defaultUrl = 'https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
-      const safariUrl = 'x-safari-https://' + defaultUrl.substring('https://'.length);
+      if (isFacebookApp() && isIOS()) {
+        link.href = 'x-safari-https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+      } else {
+        link.href = 'https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+      }
 
       // ตรวจสอบเงื่อนไข: ถ้าเป็น iOS และเปิดจากแอปฯ Facebook, Messenger หรือ LINE
       if (isIOS() && (isFacebookApp() || isLineApp())) {
@@ -105,13 +103,7 @@
       video.muted = true;
       video.playsInline = true; // เพื่อให้เล่นบนมือถือ iOS ได้
     
-      // ✅ (แก้ไขส่วนนี้) ตรวจสอบว่าเป็นมือถือหรือไม่เพื่อกำหนด target
-      if (isMobile()) {
-        link.target = '_blank'; // ถ้าเป็นมือถือ ให้เปิดในแท็บใหม่
-      } else {
-        link.target = '_self'; // ถ้าเป็นคอมพิวเตอร์ ให้เปิดในหน้าเดิม
-      }
-      
+      link.target = '_blank'; 
       link.appendChild(video); 
       linkContainer.appendChild(link);
     }
