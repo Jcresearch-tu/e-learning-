@@ -64,8 +64,16 @@
     }
 
     // Function to detect if the user is using Facebook's in-app browser
+    // function isFacebookApp() {
+    //   return /FBAN|FBAV/i.test(navigator.userAgent);
+    // }
     function isFacebookApp() {
-      return /FBAN|FBAV/i.test(navigator.userAgent);
+      // ตรวจสอบ Facebook และ Messenger
+      return /FBAN|FBAV|FBMD|FBSN|FBSV|FBSS/i.test(userAgent);
+    }
+
+    function isLineApp() {
+      return /Line/i.test(userAgent);
     }
 
     // Function to generate the appropriate link
@@ -74,10 +82,19 @@
       var link = document.createElement('a');
       var video = document.createElement('video'); // เปลี่ยนจาก img เป็น video
     
-      if (isFacebookApp() && isIOS()) {
-        link.href = 'x-safari-https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+      // if (isFacebookApp() && isIOS()) {
+      //   link.href = 'x-safari-https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+      // } else {
+      //   link.href = 'https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+      // }
+      const defaultUrl = 'https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+      const safariUrl = 'x-safari-https://' + defaultUrl.substring('https://'.length);
+
+      // ตรวจสอบเงื่อนไข: ถ้าเป็น iOS และเปิดจากแอปฯ Facebook, Messenger หรือ LINE
+      if (isIOS() && (isFacebookApp() || isLineApp())) {
+        link.href = safariUrl;
       } else {
-        link.href = 'https://script.google.com/macros/s/AKfycbyymDAGMyNGfyBILpK0g0UreFTVLZ6QY5vV9wPZTN1yQO77jKw64_kv5HCAHqCmEFD5/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+        link.href = defaultUrl;
       }
     
       // เซ็ตค่า video
