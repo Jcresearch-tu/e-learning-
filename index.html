@@ -51,6 +51,13 @@
     </div>
     
     <script>
+
+      // ✅ (เพิ่มฟังก์ชันนี้) Function to detect if the user is on a mobile device
+    function isMobile() {
+      // ตรวจสอบจาก User Agent String ว่ามีคำว่า "Mobi" อยู่หรือไม่
+      return /Mobi/i.test(navigator.userAgent);
+    }
+      
     // Function to detect if the user is on an iOS device
     function isIOS() {
       return /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -81,7 +88,13 @@
       video.muted = true;
       video.playsInline = true; // เพื่อให้เล่นบนมือถือ iOS ได้
     
-      link.target = '_blank'; 
+      // ✅ (แก้ไขส่วนนี้) ตรวจสอบว่าเป็นมือถือหรือไม่เพื่อกำหนด target
+      if (isMobile()) {
+        link.target = '_blank'; // ถ้าเป็นมือถือ ให้เปิดในแท็บใหม่
+      } else {
+        link.target = '_self'; // ถ้าเป็นคอมพิวเตอร์ ให้เปิดในหน้าเดิม
+      }
+      
       link.appendChild(video); 
       linkContainer.appendChild(link);
     }
