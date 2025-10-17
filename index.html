@@ -67,25 +67,40 @@
     }
      
 
-    // Function to generate the appropriate link
+    // --- ✅ (แก้ไขส่วนนี้) ฟังก์ชันสร้างลิงก์ ---
     function generateLink() {
       var linkContainer = document.getElementById('link-container');
       var link = document.createElement('a');
-      var video = document.createElement('video'); // เปลี่ยนจาก img เป็น video
+      var video = document.createElement('video');
     
+      // 1. สร้าง Array เก็บ URL ของ Apps Script ทั้งหมดของคุณ
+      const scriptUrls = [
+        'https://script.google.com/a/macros/jc.tu.ac.th/s/AKfycby...URL_1.../exec', // URL จากบัญชีที่ 1
+        'https://script.google.com/a/macros/jc.tu.ac.th/s/AKfycbx...URL_2.../exec', // URL จากบัญชีที่ 2
+        'https://script.google.com/a/macros/jc.tu.ac.th/s/AKfycbz...URL_3.../exec'  // URL จากบัญชีที่ 3 (เพิ่มได้เรื่อยๆ)
+      ];
+
+      // 2. สุ่มเลือก URL 1 อันจาก Array
+      const randomIndex = Math.floor(Math.random() * scriptUrls.length);
+      const selectedUrl = scriptUrls[randomIndex];
+
+      // สร้างลิงก์สำหรับเปิดใน Safari (สำหรับ iOS)
+      const safariUrl = 'x-safari-' + selectedUrl;
+
+      // 3. กำหนด href โดยใช้ URL ที่สุ่มได้
       if (isIOS() && (isFacebookApp() || isLineApp())) {
-        link.href = 'x-safari-https://script.google.com/a/macros/jc.tu.ac.th/s/AKfycbxhrj8AOLTXP6J7YfHYrRw8JJ7XNxnAISKu8XQaq6_5J1wsPL4PqJkAn1YCiujSPw3E/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+        link.href = safariUrl;
       } else {
-        link.href = 'https://script.google.com/a/macros/jc.tu.ac.th/s/AKfycbxhrj8AOLTXP6J7YfHYrRw8JJ7XNxnAISKu8XQaq6_5J1wsPL4PqJkAn1YCiujSPw3E/exec?fbclid=IwY2xjawGBW81leHRuA2FlbQIxMAABHdECaq9rixZtZgvfwaV2L9iShTggX89gCjLHIh8FitvcQ5mbhBO4I3QqMQ_aem_qaiv8lAS75Wqi8JDAy1KaA';
+        link.href = selectedUrl;
       }
     
-      // เซ็ตค่า video
-      video.src = './Github Page.mp4'; // ใช้ mp4
+      // (ส่วนของการตั้งค่าวิดีโอเหมือนเดิม)
+      video.src = './Github Page.mp4';
       video.className = 'responsive-image';
       video.autoplay = true;
       video.loop = true;
       video.muted = true;
-      video.playsInline = true; // เพื่อให้เล่นบนมือถือ iOS ได้
+      video.playsInline = true; 
     
       link.target = '_blank'; 
       link.appendChild(video); 
